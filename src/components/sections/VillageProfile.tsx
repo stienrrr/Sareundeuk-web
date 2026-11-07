@@ -123,10 +123,40 @@ export default function VillageProfile() {
                 Peta berikut mengilustrasikan area dan garis batas wilayah Desa
                 Sukamanah.
               </p>
-              <p className="mt-4 text-sm leading-6 text-neutral-grey">
-                Keterangan nama wilayah pada setiap arah mata angin belum
-                dicantumkan karena tidak tersedia pada materi yang ada.
-              </p>
+              <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl bg-warm-white p-4">
+                  <dt className="font-heading text-sm font-semibold uppercase tracking-wide text-neutral-grey">
+                    Utara
+                  </dt>
+                  <dd className="mt-1 leading-6 text-primary-charcoal">
+                    Tegal Sumedang, Rancaekek Kulon, dan Rancaekek Wetan
+                  </dd>
+                </div>
+                <div className="rounded-2xl bg-warm-white p-4">
+                  <dt className="font-heading text-sm font-semibold uppercase tracking-wide text-neutral-grey">
+                    Selatan
+                  </dt>
+                  <dd className="mt-1 leading-6 text-primary-charcoal">
+                    Solokanjeruk dan Bojongemas
+                  </dd>
+                </div>
+                <div className="rounded-2xl bg-warm-white p-4">
+                  <dt className="font-heading text-sm font-semibold uppercase tracking-wide text-neutral-grey">
+                    Timur
+                  </dt>
+                  <dd className="mt-1 leading-6 text-primary-charcoal">
+                    Rancaekek Wetan dan Bojongloa
+                  </dd>
+                </div>
+                <div className="rounded-2xl bg-warm-white p-4">
+                  <dt className="font-heading text-sm font-semibold uppercase tracking-wide text-neutral-grey">
+                    Barat
+                  </dt>
+                  <dd className="mt-1 leading-6 text-primary-charcoal">
+                    Tegalluar
+                  </dd>
+                </div>
+              </dl>
             </div>
             <figure className="relative min-h-64 bg-primary-charcoal/10 sm:min-h-80 lg:min-h-full">
               <Image
