@@ -1,17 +1,21 @@
+
 import { Suspense, type ReactNode } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
-import AdminShell, { type AdminViewer } from "@/components/admin/AdminShell";
+import AdminShell, {
+  type AdminRole,
+  type AdminViewer,
+} from "@/components/admin/AdminShell";
 
-const ALLOWED_ROLES = new Set([
+const ALLOWED_ROLES = new Set<AdminRole>([
   "admin_utama",
   "pengurus_inti",
   "anggota_bidang",
   "koordinator_bidang",
 ]);
 
-const ROLE_LABELS: Record<string, string> = {
+const ROLE_LABELS: Record<AdminRole, string> = {
   admin_utama: "Admin Utama",
   pengurus_inti: "Pengurus Inti",
   anggota_bidang: "Anggota Bidang",
@@ -23,7 +27,9 @@ export default function AdminWorkspaceLayout({
 }: LayoutProps<"/admin">) {
   return (
     <Suspense fallback={<AdminWorkspaceFallback />}>
-      <AuthenticatedAdminWorkspace>{children}</AuthenticatedAdminWorkspace>
+      <AuthenticatedAdminWorkspace>
+        {children}
+      </AuthenticatedAdminWorkspace>
     </Suspense>
   );
 }
@@ -46,6 +52,7 @@ function AdminWorkspaceFallback() {
         <div className="mt-3 h-11 rounded-xl bg-warm-white/10" />
         <div className="mt-3 h-11 rounded-xl bg-warm-white/10" />
       </aside>
+
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex min-h-[76px] items-center border-b border-primary-charcoal/10 px-5 sm:px-7">
           <div className="h-4 w-52 max-w-full rounded bg-primary-charcoal/10" />
@@ -78,14 +85,20 @@ async function AuthenticatedAdminWorkspace({
   }
 
   const role = data.user.app_metadata?.role;
-  if (typeof role !== "string" || !ALLOWED_ROLES.has(role)) {
+
+  if (
+    typeof role !== "string" ||
+    !ALLOWED_ROLES.has(role as AdminRole)
+  ) {
     redirect("/admin/clear-session");
   }
 
+  const adminRole = role as AdminRole;
+
   const viewer: AdminViewer = {
     username: data.user.email?.split("@")[0] ?? "Pengurus",
-    role,
-    roleLabel: ROLE_LABELS[role],
+    role: adminRole,
+    roleLabel: ROLE_LABELS[adminRole],
   };
 
   return <AdminShell viewer={viewer}>{children}</AdminShell>;
